@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         Test Auto Update
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.1
+// @updateURL    https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/TestAutoUpdate.user.js
+// @downloadURL  https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/TestAutoUpdate.user.js
+// @version      0.2
 // @description  Test automatic update for scripts works as expected.
 // @author       dronte57
 // @match        https://waifugame.com/
