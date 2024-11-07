@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WaifuGame: Swiper: second chance for crushed cards & failed flirts
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.7
+// @version      0.8
 // @description  Show list of crushed cards & failed flirts, just in case you change your mind and want to do *something* about them. Last 99 cards are kept.
 // @author       dronte57
 // @match        https://waifugame.com/swiper
@@ -15,6 +15,7 @@
 // ==/UserScript==
 
 /* Changelog
+0.8: Adaptations for WaifuGame: Swiper: blur the naughty
 0.7: Improvements to scrolling and margins
 */
 
@@ -182,6 +183,10 @@
 					padding: 0;
 					position: relative;
 				}
+				#wgssc-container .wgssc-mini-card .card-img-container {
+					width: 80px;
+					overflow: hidden;
+				}
 			`);
 			c2.append('<div id="wgssc-container-outer"><div id="wgssc-container" ></div></div>');
 		}
@@ -194,7 +199,9 @@
 		const imgsrc = String(card.image).replace(/@[0-9]X([.][^/]+)$/, '$1');
 		return `
 			<a onclick="showCardInfoMenuLookup($(this).data('cardid')); return false;" title="${HTML(card.name)}" href="#" class="actionShowCard wgssc-mini-card" data-cardid="${HTML(card.CardID)}">
-				<img width="${HTML(imgwidth)}" height="${HTML(imgheight)}" class="rounded-s ${HTML(card.rarityglow)}" data-rating="${HTML(card.rating)}" src="${HTML(imgsrc)}" style="max-width: 80px; max-height: 120px; height: auto; display: block;">
+				<div class="card-img-container rounded-s ${HTML(card.rarityglow)}">
+					<img width="${HTML(imgwidth)}" height="${HTML(imgheight)}" data-rating="${HTML(card.rating)}" src="${HTML(imgsrc)}" style="max-width: 80px; max-height: 120px; height: auto; display: block;">
+				</div>
 				<h3 class="onlyhover" style="position: absolute; left: 4px; top: 40px; background: black; white-space: nowrap; text-align: right; padding: 2px 8px">${HTML(card.name)}</h3>
 			</a>`;
 	}
