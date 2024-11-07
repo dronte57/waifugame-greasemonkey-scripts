@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WaifuGame: Swiper: second chance for crushed cards & failed flirts
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.8
+// @version      0.9
 // @description  Show list of crushed cards & failed flirts, just in case you change your mind and want to do *something* about them. Last 99 cards are kept.
 // @author       dronte57
 // @match        https://waifugame.com/swiper
@@ -15,6 +15,7 @@
 // ==/UserScript==
 
 /* Changelog
+0.9: Cleaned up card rarity detection and processing
 0.8: Adaptations for WaifuGame: Swiper: blur the naughty
 0.7: Improvements to scrolling and margins
 */
@@ -64,18 +65,10 @@
 	}
 
 	function encounterExtractRarityGlow(Card) {
-		if ($(Card).hasClass('glow-0'))
-			return 'glow-0';
-		if ($(Card).hasClass('glow-1'))
-			return 'glow-1';
-		if ($(Card).hasClass('glow-2'))
-			return 'glow-2';
-		if ($(Card).hasClass('glow-3'))
-			return 'glow-3';
-		if ($(Card).hasClass('glow-4'))
-			return 'glow-4';
-		if ($(Card).hasClass('glow-5'))
-			return 'glow-5';
+		const name = Card.attr('class');
+		const re = /\bglow-[0-9]+\b/;
+		if (name.match(re))
+			return name.match(re)[0];
 	}
 
 	function findCardForEncounter(EncounterID) {
