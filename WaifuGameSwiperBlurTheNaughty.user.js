@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WaifuGame: Swiper: blur the naughty
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.2
+// @version      0.3
 // @description  Blur out cards with high lewdness.
 // @author       dronte57
 // @match        https://waifugame.com/swiper
@@ -12,6 +12,7 @@
 // ==/UserScript==
 
 /* Changes
+0.3: Adaptations for WaifuGame: Swiper: second chance for crushed cards & failed flirts
 0.2: pre-load encounters
 2024-08-16: initial version
 */
@@ -24,6 +25,9 @@
 		.tinder--cards .tinder--card .card-img-container img[data-rating]:not([data-rating="0"]):not([data-rating="-1"]) {
 			filter:blur(16px);
 		}
+		#wgssc-container .wgssc-mini-card img[data-rating]:not([data-rating="0"]):not([data-rating="-1"]) {
+			filter:blur(8px);
+		}`
 	);
 
     (function(open) {
