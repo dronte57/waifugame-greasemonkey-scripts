@@ -5,8 +5,8 @@
 // @description  Display preview of Player Avatar, to check before setting a new one. To use open Card Details and use the new "Preview Player Avatar" button.
 // @author       dronte57
 // @match        https://waifugame.com/*
-// @updateURL    https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js
-// @downloadURL  https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js
+// @updateURL    https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js
+// @downloadURL  https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_addStyle
 // ==/UserScript==

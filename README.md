@@ -4,17 +4,17 @@ To be used with [Greasemonkey](https://www.greasespot.net/) or [Tampermonkey](ht
 
 ## Currently available:
 * 🌟NEW [WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js](WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js) - Show list of crushed cards & failed flirts, just in case you change your mind and want to do *something* about them. Last 99 cards are kept.
-[[click to install](https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js)]
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js)]
 * 🌟NEW [WaifuGameSwiperBlurTheNaughty.user.js](WaifuGameSwiperBlurTheNaughty.user.js) - Blur out cards with high lewdness in Swiper.
-[[click to install](https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js)]
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js)]
 * [WaifuGameSearchShowAttributes.user.js](WaifuGameSearchShowAttributes.user.js) - see Animu attributes (Nature and Trait) in card Search. Can further search with F3 key press.
-[[click to install](https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGameSearchShowAttributes.user.js)]
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSearchShowAttributes.user.js)]
 
 * [WaifuGamePlayerAvatarPreview.user.js](WaifuGamePlayerAvatarPreview.user.js) - instantly preview Player Avatar as if it would be created from a Card. To use open Card Details and click the new "Preview Player Avatar" button.
-[[click to install](https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js)]
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js)]
 
 * [WaifuGameSwiperClickToOpen.user.js](WaifuGameSwiperClickToOpen.user.js) - instantly see card details in Swiper with one click
-[[click to install](https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGameSwiperClickToOpen.user.js)]
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperClickToOpen.user.js)]
 
 * [TestAutoUpdate.user.js](TestAutoUpdate.user.js) - test article, also boilerplate if you want to create & share your own scripts. Be sure to adjust the header!
 

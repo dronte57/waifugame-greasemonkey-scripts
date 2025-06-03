@@ -6,8 +6,8 @@
 // @author       dronte57
 // @match        https://waifugame.com/swiper
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
-// @updateURL    https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js
-// @downloadURL  https://raw.githubusercontent.com/dronte57/waifugame-greasemonkey-scripts/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js
+// @updateURL    https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js
+// @downloadURL  https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
