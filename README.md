@@ -3,8 +3,6 @@ Collection of quality of life user scripts for [WaifuGame](https://waifugame.com
 To be used with [Greasemonkey](https://www.greasespot.net/) or [Tampermonkey](https://www.tampermonkey.net/).
 
 ## Currently available:
-* 🌟NEW [WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js](WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js) - Show list of crushed cards & failed flirts, just in case you change your mind and want to do *something* about them. Last 99 cards are kept.
-[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js)]
 * 🌟NEW [WaifuGameSwiperBlurTheNaughty.user.js](WaifuGameSwiperBlurTheNaughty.user.js) - Blur out cards with high lewdness in Swiper.
 [[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js)]
 * [WaifuGameSearchShowAttributes.user.js](WaifuGameSearchShowAttributes.user.js) - see Animu attributes (Nature and Trait) in card Search. Can further search with F3 key press.
@@ -17,6 +15,9 @@ To be used with [Greasemonkey](https://www.greasespot.net/) or [Tampermonkey](ht
 [[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperClickToOpen.user.js)]
 
 * [TestAutoUpdate.user.js](TestAutoUpdate.user.js) - test article, also boilerplate if you want to create & share your own scripts. Be sure to adjust the header!
+
+* (obsolete) [WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js](WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js) - Show list of crushed cards & failed flirts, just in case you change your mind and want to do *something* about them. Last 99 cards are kept.
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperSecondChanceForCrushedCardsAndFailedFlirts.user.js)]
 
 ## Reuse and contributing
 Scripts published under [MIT License](LICENSE), meant for further reuse.
