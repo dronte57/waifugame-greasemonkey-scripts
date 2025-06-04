@@ -14,77 +14,83 @@
 (function() {
     'use strict';
 
-	var Where = {
-		WishlistButtons: $('#wishlistButtons'),
-		PlayerAvatarPreviewer: $('#playerAvatarPreviewer'),
-	}
-
-	function HTML(text) {
-		var map = {
-			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
-			'"': '&quot;',
-			"'": '&#039;'
-		};
-		return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
-	}
+	const poi = {
+		imgOriginal: undefined,
+		wishlistButtons: undefined,
+		previewButton: undefined,
+		setPlayerAvatarButton: undefined,
+		playerAvatarPreviewer: undefined,
+		playerAvatarPreviewerImg: undefined,
+	};
 
 	function setupPreviewButton() {
-		Where.WishlistButtons.find('#setPlayerAvatar').before(`<button id="previewPlayerAvatar" class="btn btn-block btn-outline-secondary"><i class="fas fa-image"></i> Preview Player Avatar</button>`)
+		poi.wishlistButtons = document.querySelector('#wishlistButtons');
+		poi.setPlayerAvatarButton = document.querySelector('#setPlayerAvatar');
+		/* this is empty at first */
+		if (!poi.setPlayerAvatarButton)
+			return;
+		poi.previewButton = document.createElement('button');
+		poi.previewButton.id = 'previewPlayerAvatar';
+		poi.previewButton.className = 'btn btn-block btn-outline-secondary';
+		poi.previewButton.innerHTML = `<i class="fas fa-image"></i> Preview Player Avatar`;
+		poi.setPlayerAvatarButton.before(poi.previewButton);
+		poi.previewButton.addEventListener('click', servicePreviewClick);
 	}
 
 	function serviceWishlistButtonMutation() {
-		if (Where.WishlistButtons.find('#previewPlayerAvatar').length==0)
+		if (!poi.wishlistButtons.querySelector('#previewPlayerAvatar'))
 			setupPreviewButton();
 	}
 
 	function servicePreviewClick() {
-		const img_orig = {
-			url: $('#cardInfoImg').attr('src'),
-		};
-		const img_small = {
-			url: String(img_orig.url).replace(/[@][0-9]+X([.][^./]+)$/, '$1'),
+		poi.playerAvatarPreviewerImg.removeAttribute('src');
+        poi.imgOriginal = document.querySelector('#cardInfoImg');
+		const imgSmall = {
+			url: String(poi.imgOriginal.src).replace(/[@][0-9]+X([.][^./]+)$/, '$1'),
 			width: 200,
 			height: 300,
 		};
-		Where.PlayerAvatarPreviewer.find('img').attr('src', img_small.url);
-		Where.PlayerAvatarPreviewer[0].showPopover();
+		poi.playerAvatarPreviewerImg.src = imgSmall.url;
+		poi.playerAvatarPreviewer.showPopover();
 	}
 
-	function setup() {
-		const img_orig = {
-			url: $('#cardInfoImg').attr('src'),
-		};
-		const img_small = {
-			url: String(img_orig.url).replace(/[@][0-9]+X([.][^./]+)$/, '$1'),
-			width: 200,
-			height: 300,
-		};
-		$('body').append(`
-			<div id="playerAvatarPreviewer"
-				popover=auto
-				style="
-					position: fixed;
-					z-index: 1200;
-					border-radius: 125px;
-					padding: 0;
-					width: 250px; height: 250px; overflow: hidden">
-				<img style="position: relative; top: -63px; width: 250px; height: 375px" width="${HTML(img_small.width)}" height="${HTML(img_small.height)}" src="${HTML(img_small.url)}"/>
-			</div>`);
-		Where.PlayerAvatarPreviewer = $('#playerAvatarPreviewer');
+	function setupPreviewerPopover() {
+        poi.playerAvatarPreviewer = document.createElement('div');
+        poi.playerAvatarPreviewer.id = 'playerAvatarPreviewer';
+		poi.playerAvatarPreviewer.popover = 'auto';
+        poi.playerAvatarPreviewerImg = document.createElement('img');
+        poi.playerAvatarPreviewer.append(poi.playerAvatarPreviewerImg);
+        document.body.append(poi.playerAvatarPreviewer);
 
 		GM_addStyle(`
 			#playerAvatarPreviewer::backdrop { background: #123e; }
+            #playerAvatarPreviewer {
+				position: fixed;
+				z-index: 1200;
+				border-radius: 125px;
+				padding: 0;
+				width: 250px;
+				height: 250px;
+				overflow: hidden;
+            }
+            #playerAvatarPreviewer > img {
+				position: relative;
+				top: -63px;
+				width: 250px;
+				height: 375px;
+            }
 		`);
-		if (false)
-		GM_addStyle(`
-			#cardInfo button#setPlayerAvatar,
-			#cardInfo button#previewPlayerAvatar { max-width: 50%; }
-		`);
+	}
+
+	function setupFillInOnDialogChange() {
 		var Observer = new MutationObserver(serviceWishlistButtonMutation);
-		Observer.observe(Where.WishlistButtons[0], {childList:true});
-		Where.WishlistButtons.on('click', '#previewPlayerAvatar', servicePreviewClick);
+		Observer.observe(poi.wishlistButtons, {childList:true});
+	}
+
+	function setup() {
+		setupPreviewButton();
+		setupPreviewerPopover();
+		setupFillInOnDialogChange();
 	};
 
     setup();
