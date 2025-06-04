@@ -3,6 +3,8 @@ Collection of quality of life user scripts for [WaifuGame](https://waifugame.com
 To be used with [Greasemonkey](https://www.greasespot.net/) or [Tampermonkey](https://www.tampermonkey.net/).
 
 ## Currently available:
+* 🌟NEW [WaifuGame-Main-Menu-folding-and-keyboard-shortcuts.user.js](WaifuGame-Main-Menu-folding-and-keyboard-shortcuts.user.js) - Save screen space by folding the main menu into compact form. Highlight current item. Provide keyboard shortcut for quick switch to next/previous one: Ctrl+Alt+ArrowDown, Ctrl+Alt+ArrowUp (similar to Discord).
+[[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGame-Main-Menu-folding-and-keyboard-shortcuts.user.js)]
 * 🌟NEW [WaifuGameSwiperBlurTheNaughty.user.js](WaifuGameSwiperBlurTheNaughty.user.js) - Blur out cards with high lewdness in Swiper.
 [[click to install](https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGameSwiperBlurTheNaughty.user.js)]
 * [WaifuGameSearchShowAttributes.user.js](WaifuGameSearchShowAttributes.user.js) - see Animu attributes (Nature and Trait) in card Search. Can further search with F3 key press.
