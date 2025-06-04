@@ -1,15 +1,19 @@
 // ==UserScript==
 // @name         WaifuGame: Player Avatar Preview
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.2
+// @version      0.3
 // @description  Display preview of Player Avatar, to check before setting a new one. To use open Card Details and use the new "Preview Player Avatar" button.
 // @author       dronte57
 // @match        https://waifugame.com/*
 // @updateURL    https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js
 // @downloadURL  https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGamePlayerAvatarPreview.user.js
-// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=waifugame.com
 // @grant        GM_addStyle
 // ==/UserScript==
+
+/* Changelog
+0.3: Icon and cleanups
+*/
 
 (function() {
     'use strict';
