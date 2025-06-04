@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name         WaifuGame: Main Menu: folding and keyboard shortcuts
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.8
+// @version      0.9
 // @description  Save screen space by folding the main menu into compact form. Highlight current item. Provide keyboard shortcut for quick switch to next/previous one: Ctrl+Alt+ArrowDown, Ctrl+Alt+ArrowUp (similar to Discord).
 // @author       dronte57
+// @updateURL    https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGame-Main-Menu-folding-and-keyboard-shortcuts.user.js
+// @downloadURL  https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGame-Main-Menu-folding-and-keyboard-shortcuts.user.js
 // @match        https://waifugame.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=waifugame.com
 // @grant        GM_addStyle
@@ -11,6 +13,7 @@
 // ==/UserScript==
 
 /* Changelog
+0.9: Update and download links
 0.8: adjust scrollbar color and size for Chrome
 0.7: align icons layout for Firefox
 0.6: Ctrl+Alt+ArrowUp, ArrowDown key combo to switch pages
