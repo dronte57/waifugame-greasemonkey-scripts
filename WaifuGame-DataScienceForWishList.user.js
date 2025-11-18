@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WaifuGame: Data Science for Wish List
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.4
+// @version      0.5
 // @description  Import and export Wish List
 // @author       dronte57
 // @updateURL    https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGame-DataScienceForWishList.user.js
@@ -14,6 +14,7 @@
 // ==/UserScript==
 
 /* Changelog
+0.5: Show wishlisted card count
 0.4: Toast cleanup
 0.3: Interface refresh
 0.2: CSV file import
@@ -99,6 +100,12 @@
 		static usStaticInit() {
 			this.usAddStyle();
 		}
+		static usAutosetup(element) {
+			if (element === undefined)
+				element = document;
+			element.querySelectorAll('.autosetup-wgus-content.wgus-content-inline').forEach((element)=>WgusMarkers.usMarkerMakeInlineMarked(element));
+			element.querySelectorAll('.autosetup-wgus-content.wgus-content-block').forEach((element)=>WgusMarkers.usMarkerMakeBlockMarked(element));
+		}
 		static usAddStyle() {
 			GM_addStyle(`
 				.wgus-content-marker-inline {
@@ -119,8 +126,6 @@
 				}
 			`);
 		}
-		static usInlineAddClass(element) { element.classList.add('wgus-content', 'wgus-content-inline'); }
-		static usBlockAddClass(element) { element.classList.add('wgus-content', 'wgus-content-block'); }
 		static usMarkerText() { return ' 🭣'; }
 		static usMarkerSpan() {
 			const span = document.createElement('span');
@@ -135,8 +140,12 @@
 			span.textContent = this.usMarkerText();
 			return span;
 		}
+		static usInlineAddClass(element) {
+			element.classList.add('wgus-content', 'wgus-content-inline');
+		}
 		static usMarkerMakeInlineMarked(element) {
 			this.usInlineAddClass(element);
+			element.classList.remove('autosetup-wgus-content');
 			if (String(element.title) === '') {
 				element.title = `UserScript feature: [${GM_info.script.name} by ${GM_info.script.author}]; please report problems and ask questions on the game's community Discord server`;
 				element.append(this.usMarkerSpanWithoutTitle());
@@ -144,12 +153,15 @@
 			else
 				element.append(this.usMarkerSpan());
 		}
+		static usBlockAddClass(element) {
+			element.classList.add('wgus-content', 'wgus-content-block');
+		}
 		static usMarkerMakeBlockMarked(element) {
 			this.usBlockAddClass(element);
+			element.classList.remove('autosetup-wgus-content');
 			element.title = `UserScript feature: [${GM_info.script.name} by ${GM_info.script.author}]; please report problems and ask questions on the game's community Discord server`;
-			element.append(this.usMarkerSpan());
+			element.append(this.usMarkerSpanWithoutTitle());
 		}
-
 		static usMarkerAfterBlockElement(element) {
 			const div = document.createElement('div');
 			div.title = `UserScript feature: [${GM_info.script.name} by ${GM_info.script.author}]; please report problems and ask questions on the game's community Discord server`;
@@ -685,7 +697,7 @@
 					<a href="#wgus-wlds-technical-documentation">Technical documentation</a> is available.
 				</p>
 
-				<!-- FIXME this is very wrong due to early executionvs gradual loading; use mutation observer <p>Found wishlisted cards: <span class="wgus-wlds-found-wishlisted-cards-count">${Number(document.querySelectorAll('#wishedCards div[data-cardid]').length)}</span></p> -->
+				<p class="autosetup-wgus-content wgus-content-block">Found wishlisted cards: <span class="wgus-wlds-found-wishlisted-cards-count">?</span></p>
 
 				<div id="wgus-wlds-technical-documentation" style="padding-top: 50px; /*rip black bar up top*/">
 					<h2>Wish List Data Science technical documentation</h2>
@@ -717,11 +729,18 @@
 		WgusMarkers.usMarkerMakeBlockMarked(card.querySelector('h1'));
 		WgusMarkers.usMarkerMakeBlockMarked(card.querySelector('#wgus-wlds-technical-documentation h2'));
 
-		/*FIXME: show live count*/
-		/*
-		${Number(document.querySelectorAll('#wishedCards div[data-cardid]').length)}
-		'.wgus-wlds-found-wishlisted-cards-count'
-		*/
+		WgusMarkers.usAutosetup(poi.interfaceCard);
+		setupUpdateWishlistedCardCount();
+	}
+
+	function updateWishlistedCardCount() {
+		document.querySelector('.wgus-wlds-found-wishlisted-cards-count').textContent = Number(document.querySelectorAll('#wishedCards div[data-cardid]').length);
+	}
+
+	function setupUpdateWishlistedCardCount() {
+		const observer = new MutationObserver(updateWishlistedCardCount);
+		observer.observe(document.querySelector('#wishedCards'), {childList: true,subtree: true});
+		updateWishlistedCardCount(); /* yeah pre-run once */
 	}
 
 	function setupInterface() {
