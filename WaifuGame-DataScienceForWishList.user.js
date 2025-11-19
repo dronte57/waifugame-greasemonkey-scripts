@@ -380,6 +380,9 @@
 	}
 
 	const poi = {};
+	const config = {
+		addmode:'full-add',
+	};
 
 	function showDataScience() {
 
@@ -619,8 +622,14 @@
 
 	function addWishCardByRecord(record, rest, originalrecordset) {
 /*FIXME skip already wishlisted cards - BUT CAREFUL if the in-browser data is stale*/
-		if (record.CardID)
-			httpRequestAddOneCardToWishlist(onWishlistCardAdd, record.CardID, rest, originalrecordset)
+		if (record.CardID) {
+			if ((config.addmode === 'partial-add') && document.querySelector(`#wishedCards div.card.card-style[data-cardid="${Number(record.CardID)}"]`)) {
+				let record = rest.shift();
+				return addWishCardByRecord(record, rest, originalrecordset);
+			}
+			else
+				httpRequestAddOneCardToWishlist(onWishlistCardAdd, record.CardID, rest, originalrecordset)
+		}
 		else {
 			console.log('CardID "CardID" column not found', record);
 			alert('CardID "ID" column not found');
@@ -649,7 +658,17 @@
 			alert('No file provided');
 	}
 
+	function doPartialAddWishlistCsv() {
+		config.addmode = 'partial-add';
+		_doXAddWishlistCsv();
+	}
+
 	function doAddWishlistCsv() {
+		config.addmode = 'full-add';
+		_doXAddWishlistCsv();
+	}
+
+	function _doXAddWishlistCsv() {
 		if (!poi.csvfileinput) {
 			poi.csvfileinput = document.createElement('input');
 			poi.csvfileinput.type = 'file';
@@ -715,17 +734,21 @@
 				</div>
 				<div class="row mb-1">
 					<div class="col-md-6">
-						<button type="button" onclick="document.dispatchEvent(new Event('wgusDataScience.doDownloadWishlistCsv'))" class="wgus-wlds-downloadcsv-wl btn btn-block btn-outline-secondary">Download Wishlist backup (CSV file)</button>
+						<button type="button" onclick="document.dispatchEvent(new Event('wgusDataScience.doDownloadWishlistCsv'))" class="autosetup-wgus-content wgus-content-inline wgus-wlds-downloadcsv-wl btn btn-block btn-outline-secondary">Download Wishlist backup (CSV file)</button>
 					</div>
 					<div class="col-md-6">
-						<button type="button" onclick="document.dispatchEvent(new Event('wgusDataScience.doAddWishlistCsv'))" class="wgus-wlds-addcsv-wl btn btn-block btn-outline-secondary">Add to Wishlist from backup (CSV file)</button>
+						<button type="button" onclick="document.dispatchEvent(new Event('wgusDataScience.doAddWishlistCsv'))" class="autosetup-wgus-content wgus-content-inline wgus-wlds-addcsv-wl btn btn-block btn-outline-secondary">Add to Wishlist from backup (CSV file)</button>
+					</div>
+				</div>
+				<div class="row justify-content-center mb-1">
+					<div class="col-md-9">
+						<button type="button" onclick="document.dispatchEvent(new Event('wgusDataScience.doPartialAddWishlistCsv'))" class="autosetup-wgus-content wgus-content-inline wgus-wlds-partial-addcsv-wl btn btn-block btn-outline-secondary">
+							BETA-TESTING ONLY: Add to Wishlist, skip already wished cards</button>
 					</div>
 				</div>
 			</div>`;
 		point.after(card);
 		poi.interfaceCard = card;
-		WgusMarkers.usMarkerMakeInlineMarked(poi.interfaceCard.querySelector('.wgus-wlds-downloadcsv-wl'));
-		WgusMarkers.usMarkerMakeInlineMarked(poi.interfaceCard.querySelector('.wgus-wlds-addcsv-wl'));
 		WgusMarkers.usMarkerMakeBlockMarked(card.querySelector('h1'));
 		WgusMarkers.usMarkerMakeBlockMarked(card.querySelector('#wgus-wlds-technical-documentation h2'));
 
@@ -777,6 +800,7 @@
 		document.addEventListener('wgusDataScienceShow', function() {showDataScience();});
 		document.addEventListener('wgusDataScience.doDownloadWishlistCsv', function() {doDownloadWishlistCsv();});
 		document.addEventListener('wgusDataScience.doAddWishlistCsv', function() {doAddWishlistCsv();});
+		document.addEventListener('wgusDataScience.doPartialAddWishlistCsv', ()=>doPartialAddWishlistCsv());
 		document.addEventListener('wgusDataScience.doConfirmPruneWishlist', ()=>confirm('Delete all wishlisted cards? Be sure to download Wishlist Backup first!') && document.dispatchEvent(new Event('wgusDataScience.doStartPruneWishlist')));
 		document.addEventListener('wgusDataScience.doStartPruneWishlist', doPruneWishlist);
 		setupONCONTENTLOADED();
