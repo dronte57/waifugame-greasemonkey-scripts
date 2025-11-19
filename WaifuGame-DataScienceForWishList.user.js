@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WaifuGame: Data Science for Wish List
 // @namespace    https://github.com/dronte57/waifugame-greasemonkey-scripts
-// @version      0.5
+// @version      0.6
 // @description  Import and export Wish List
 // @author       dronte57
 // @updateURL    https://github.com/dronte57/waifugame-greasemonkey-scripts/raw/refs/heads/main/WaifuGame-DataScienceForWishList.user.js
@@ -14,6 +14,7 @@
 // ==/UserScript==
 
 /* Changelog
+0.6: Partial import and authothrottle
 0.5: Show wishlisted card count
 0.4: Toast cleanup
 0.3: Interface refresh
@@ -23,6 +24,31 @@
 
 (function() {
     'use strict';
+
+	class WgusXHRAutothrottle {
+		static get VERSION() { return 0.1; };
+
+		static bucketSize;
+		static remaining;
+		static delay = 330;
+
+		static get xhratDelayMilliseconds() {
+			return this.delay;
+		}
+		static updateWithRequest(request) {
+			this.bucketSize = Number(request.getResponseHeader('X-Ratelimit-Limit'));
+			this.remaining = Number(request.getResponseHeader('X-Ratelimit-Remaining'));
+			const minDelay = 330;
+			const maxDelay = 1330;
+			const delta = 20;
+			if ((this.remaining / this.bucketSize) > .4)
+				this.delay = minDelay;
+			if ((this.remaining / this.bucketSize) < .4)
+				this.delay = minDelay * 2;
+			if (this.delay > maxDelay)
+				this.delay = maxDelay;
+		}
+	}
 
 	class WgusToast {
 		static get VERSION() { return 0.1; };
@@ -554,12 +580,13 @@
 		const data = {action: 'remove', tag: 'id:'+Number(cardid), _token: document.querySelector('input[name="_token"]').value, };
 		const request = new XMLHttpRequest();
 		request.open('POST', '/profile/wishlist', true);
-		request.onload = ()=>onload(request.responseText, cardid);
+		request.onload = ()=>onload(request, cardid);
 		request.setRequestHeader('Content-Type', 'application/json');
 		request.send(JSON.stringify(data));
 	}
 
-	function onWishlistCardRemove(responseText, cardid) {
+	function onWishlistCardRemove(request, cardid) {
+		let responseText = request.responseText;
 		let response = JSON.parse(responseText);
 		if (response.status === 'ok')
 			/*console.log('success')*/;
@@ -577,7 +604,7 @@
 			document.querySelector('#wishedCards').scrollIntoView();
 			document.body.parentNode.scrollBy(0, -60); /*necessitated by the black bar up top*/
 		}
-		window.setTimeout(doPruneWishlist, 330);
+		window.setTimeout(doPruneWishlist, WgusXHRAutothrottle.xhratDelayMilliseconds());
 	}
 
 	function doPruneWishlist() {
@@ -605,6 +632,8 @@
 	}
 
 	function onWishlistCardAdd(request, cardid, recordset, originalrecordset) {
+		WgusXHRAutothrottle.updateWithRequest(request);
+		let responseText = request.responseText;
 		if (request.status !== 200) {
 			if (request.status === 429)
 				poi.errorToast.toastShow('HTTP 429 Requesting too fast; IMPORT INTERRUPTED');
@@ -624,7 +653,7 @@
 		if (recordset.length) {
 			let record = recordset.shift();
 			let rest = recordset;
-			window.setTimeout(()=>addWishCardByRecord(record, rest, originalrecordset), 330);
+			window.setTimeout(()=>addWishCardByRecord(record, rest, originalrecordset), WgusXHRAutothrottle.xhratDelayMilliseconds);
 		}
 		else {
 			alert('Import completed; RELOAD PAGE TO SHOW RESULTS');
