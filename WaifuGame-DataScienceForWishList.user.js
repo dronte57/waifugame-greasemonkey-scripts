@@ -81,6 +81,11 @@
 			else
 				throw new Error('autohide delay');
 		}
+		toastStyleError() {
+			this.element.classList.remove('bg-green-dark');
+			this.element.classList.add('bg-red-dark');
+			this.element.querySelector('i.fa').className = 'fa fa-times mr-3';
+		}
 		toastShow(text) {
 			this.textElement.textContent = text;
 			$(this.element).toast('show');
@@ -594,13 +599,20 @@
 		const data = {action: 'add', tag: 'id:'+Number(cardid), _token: document.querySelector('input[name="_token"]').value, };
 		const request = new XMLHttpRequest();
 		request.open('POST', '/profile/wishlist', true);
-		request.onload = ()=>onload(request.responseText, cardid, recordset, originalrecordset);
+		request.onload = ()=>onload(request, cardid, recordset, originalrecordset);
 		request.setRequestHeader('Content-Type', 'application/json');
 		request.send(JSON.stringify(data));
 	}
 
-	function onWishlistCardAdd(responseText, cardid, recordset, originalrecordset) {
-		let response = JSON.parse(responseText);
+	function onWishlistCardAdd(request, cardid, recordset, originalrecordset) {
+		if (request.status !== 200) {
+			if (request.status === 429)
+				poi.errorToast.toastShow('HTTP 429 Requesting too fast; IMPORT INTERRUPTED');
+			else
+				poi.errorToast.toastShow('Server returned error; IMPORT INTERRUPTED');
+			return;
+		}
+		let response = JSON.parse(request.responseText);
 		if (response.status === 'ok')
 			poi.progressToast.toastShow(`Card Wishlisted (remaining: ${recordset.length} / ${originalrecordset.length})`);
 		else {
@@ -692,6 +704,8 @@
 
 	function _setupInterface() {
 		poi.progressToast = new WgusToast('progress', 3000);
+		poi.errorToast = new WgusToast('error');
+		poi.errorToast.toastStyleError();
 		let point = document.querySelector('#page .page-content .page-title-clear + .card.card-style + .card.card-style');
 		let card = document.createElement('div');
 		card.id = 'wgus-wlds-card';
